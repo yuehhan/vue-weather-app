@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="typeof weather.main != 'undefined' && weather.main.temp > 65 ? 'warm': 'cold'">
+  <div id="app" :class="typeof weather.main !== 'undefined' && getWeatherBackground(weather.main.temp) ">
     <main>
 
     <div class="search-box">
@@ -32,7 +32,7 @@ export default {
   name: 'app',
   data () {
     return {
-      api_key: "aee5778d3b9e6ebc60ad82e240762ea5",
+      api_key: process.env.VUE_APP_API_KEY,
       url_base: "https://api.openweathermap.org/data/2.5/",
       query: "",
       weather: {}
@@ -59,6 +59,14 @@ export default {
       let month = months[d.getMonth()];
       let year = d.getFullYear();
       return `${day} ${date} ${month} ${year}`;
+    },
+    getWeatherBackground(temp){
+      if(temp > 65){
+        return 'warm';
+      }
+      else{
+        return 'cold';
+      }
     }
   }
 }
